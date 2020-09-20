@@ -13,7 +13,7 @@ class Search_Sort extends Component {
             </div>
           </div>
           <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <div className="dropdown sort">
+            <div className="dropdown">
               <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
                 Sort
               </button>

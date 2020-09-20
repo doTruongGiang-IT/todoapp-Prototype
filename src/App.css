@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
   overflow: hidden;
 }
 
@@ -36,12 +36,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.sort {
-  text-align: left;
-}
-
-.mr90 {
-  margin-right: 90%;
 }

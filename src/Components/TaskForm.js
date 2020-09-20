@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 
 class TaskForm extends Component {
+    onExit = () => {
+        this.props.exit();
+    };
+
   render() {
     return (
         <div className="card">
-            <h3 className="card-header">Insert Task</h3>
+            <h3 className="card-header" onClick={this.onExit}>Insert Task</h3>
             <div className="card-body">
                 <form>
                     <div className="form-group">
