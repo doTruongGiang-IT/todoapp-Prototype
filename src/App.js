@@ -22,30 +22,6 @@ class App extends Component {
     }
   };
 
-  onGenerate = ()=> {
-    let tasks = [
-      {
-        id: this.generateID(),
-        name: "Learn Angular",
-        status: true
-      },
-      {
-        id: this.generateID(),
-        name: "Go to school",
-        status: false
-      },
-      {
-        id: this.generateID(),
-        name: "Dating",
-        status: true
-      },
-    ];
-    this.setState( {
-      tasks: tasks
-    } );
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  };
-
   encode() {
     return Math.floor( (1+Math.random()) * 0x10000 ).toString(16).substring(1);
   };
@@ -66,10 +42,55 @@ class App extends Component {
     });
   };
 
+  submitForm = (data) => {
+    data.id = this.generateID();
+    var {tasks} = this.state;
+    tasks.push(data);
+    this.setState({
+      tasks: tasks
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  };
+
+  onSetStatus = (id) => {
+    var {tasks} = this.state;
+    let index = this.findIndex(id);
+    if( index !== -1 ) {
+      tasks[index].status =  !tasks[index].status;
+      this.setState({
+        tasks: tasks
+      });
+      localStorage.setItem('tasks',JSON.stringify(tasks));
+    }
+  };
+
+  onDelete = (id) => {
+    var {tasks} = this.state;
+    let index = this.findIndex(id);
+    if( index !== -1 ) {
+      tasks.splice(index, 1);
+      this.setState({
+        tasks: tasks
+      });
+      localStorage.setItem('tasks',JSON.stringify(tasks));
+    }
+  };
+
+  findIndex = (id) => {
+    var {tasks} = this.state;
+    var result = -1;
+    tasks.forEach( (task, index) => {
+      if( task.id === id ) {
+        result = index;
+      }
+    } );
+    return result;
+  };
+
   render() {
     let taskItems = this.state.tasks;
     let {isDisplay} = this.state;
-    let showForm = isDisplay ? <TaskForm exit={this.onClose} /> : '';
+    let showForm = isDisplay ? <TaskForm submit={this.submitForm} exit={this.onClose} /> : '';
     return (
       <div className="App">
         <div className="text-center">
@@ -83,7 +104,6 @@ class App extends Component {
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <button className="btn btn-outline-secondary mr-2" type="button" onClick={this.toggleForm}>Add more task</button>
-                <button className="btn btn-outline-secondary" type="button" onClick={this.onGenerate}>Generate</button>
               </div>
             </div>            
             <div className="row mt-3">
@@ -93,7 +113,7 @@ class App extends Component {
             </div>
             <div className="row mt-3">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <TasksList tasks={taskItems}/>
+                <TasksList tasks={taskItems} setStatus={this.onSetStatus} delete={this.onDelete} />
               </div>
             </div>
           </div>
