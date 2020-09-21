@@ -9,6 +9,10 @@ class TaskItems extends Component {
         this.props.delete(this.props.task.id);
     };
 
+    updateItem = () => {
+        this.props.update(this.props.task.id);
+    };
+
     render() {
         let {task, index} = this.props;
         return (
@@ -19,7 +23,7 @@ class TaskItems extends Component {
                     <span className="label label-danger"> {(task.status === true ? 'Active' : 'Hide')} </span>
                 </td>
                 <td className="text-center">
-                    <button type="submit" className="btn btn-primary mr-3">
+                    <button type="submit" className="btn btn-primary mr-3" onClick={this.updateItem}>
                         Update
                     </button>
                     <button type="button" className="btn btn-primary" onClick={this.deleteItem}>

@@ -1,14 +1,33 @@
 import React, { Component } from 'react';
 
-class Search_Sort extends Component {
+class SearchSort extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: ''
+    };
+  }
+
+  setKeywords = (e) => {
+    let value = e.target.value;
+    this.setState({
+      search: value
+    });
+  };
+
+  search = () => {
+    this.props.search(this.state.search);
+  };
+
   render() {
+    let {search} = this.state;
     return (
         <div className="row">
           <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
             <div className="input-group mb-3">
-              <input type="text" className="form-control" />
+              <input type="text" className="form-control" value={search} onChange={this.setKeywords} />
               <div className="input-group-append">
-                <button className="btn btn-outline-secondary" type="button">Search</button>
+                <button className="btn btn-outline-secondary" type="button" onClick={this.search}>Search</button>
               </div>
             </div>
           </div>
@@ -30,4 +49,4 @@ class Search_Sort extends Component {
   }
 }
 
-export default Search_Sort;
+export default SearchSort;

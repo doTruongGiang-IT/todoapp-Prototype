@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TaskForm from './Components/TaskForm';
-import Search_Sort from './Components/Search&Sort';
+import SearchSort from './Components/Search&Sort';
 import TasksList from './Components/TasksList';
 import './App.css';
 
@@ -9,7 +9,13 @@ class App extends Component {
     super(props);
     this.state = {
       tasks: [],
-      isDisplay: false
+      isDisplay: false,
+      taskEditing: null,
+      filter: {
+        name: '',
+        status: 2
+      },
+      search: ''
     };
   }
 
@@ -31,9 +37,17 @@ class App extends Component {
   };
 
   toggleForm = () => {
-    this.setState({
-      isDisplay: !this.state.isDisplay 
-    });
+    if( this.state.isDisplay && this.state.taskEditing !== null ) {
+      this.setState({
+        isDisplay: true,
+        taskEditing: null 
+      });
+    }else {
+      this.setState({
+        isDisplay: !this.state.isDisplay,
+        taskEditing: null
+      });
+    }
   };
 
   onClose = () => {
@@ -42,12 +56,24 @@ class App extends Component {
     });
   };
 
-  submitForm = (data) => {
-    data.id = this.generateID();
-    var {tasks} = this.state;
-    tasks.push(data);
+  onShow = () => {
     this.setState({
-      tasks: tasks
+      isDisplay: true 
+    });
+  };
+
+  submitForm = (data) => {
+    var {tasks} = this.state;
+    if( data.id === '' ) {
+      data.id = this.generateID();
+      tasks.push(data);
+    }else {
+      var index = this.findIndex(data.id);
+      tasks[index] = data;
+    }
+    this.setState({
+      tasks: tasks,
+      taskEditing: null
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
   };
@@ -76,6 +102,18 @@ class App extends Component {
     }
   };
 
+  onUpdate = (id) => {
+    var {tasks} = this.state;
+    let index = this.findIndex(id);
+    var taskEditing = tasks[index];
+    // if( index !== -1 ) {
+    this.setState({
+      taskEditing: taskEditing
+    });
+    this.onShow();
+    // }
+  };
+
   findIndex = (id) => {
     var {tasks} = this.state;
     var result = -1;
@@ -87,10 +125,45 @@ class App extends Component {
     return result;
   };
 
+  filterItem = (filterName, filterStatus) => {
+    filterStatus = parseInt(filterStatus, 10);
+    this.setState({
+      filter: {
+        name: filterName.toLowerCase(),
+        status: filterStatus
+      }
+    });
+  };
+
+  searchItem = (keywords) => {
+    this.setState({
+      search: keywords.toLowerCase()
+    });
+  };
+
   render() {
     let taskItems = this.state.tasks;
-    let {isDisplay} = this.state;
-    let showForm = isDisplay ? <TaskForm submit={this.submitForm} exit={this.onClose} /> : '';
+    let {isDisplay, taskEditing, filter, search} = this.state;
+    if( filter ) {
+      if( filter.name ) {
+        taskItems = taskItems.filter( taskItem => {
+          return taskItem.name.toLowerCase().indexOf(filter.name) !== -1;
+        } );
+      }
+      taskItems = taskItems.filter( taskItem => {
+        if( filter.status === 2 ) {
+          return taskItem;
+        }else {
+          return taskItem.status === (filter.status === 1 ? true : false);
+        }
+      } );
+    }
+    if( search ) {
+      taskItems = taskItems.filter( taskItem => {
+        return taskItem.name.toLowerCase().indexOf(search) !== -1;
+      } );
+    }
+    let showForm = isDisplay ? <TaskForm submit={this.submitForm} exit={this.onClose} edit={taskEditing} /> : '';
     return (
       <div className="App">
         <div className="text-center">
@@ -108,12 +181,12 @@ class App extends Component {
             </div>            
             <div className="row mt-3">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <Search_Sort />
+                <SearchSort search={this.searchItem} />
               </div>
             </div>
             <div className="row mt-3">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <TasksList tasks={taskItems} setStatus={this.onSetStatus} delete={this.onDelete} />
+                <TasksList tasks={taskItems} filter={this.filterItem} setStatus={this.onSetStatus} delete={this.onDelete} update={this.onUpdate} />
               </div>
             </div>
           </div>
