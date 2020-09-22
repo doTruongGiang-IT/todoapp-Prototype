@@ -3,6 +3,7 @@ import TaskForm from './Components/TaskForm';
 import SearchSort from './Components/Search&Sort';
 import TasksList from './Components/TasksList';
 import './App.css';
+import {findIndex} from 'lodash';
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +16,9 @@ class App extends Component {
         name: '',
         status: 2
       },
-      search: ''
+      search: '',
+      sortBy: 'name',
+      sortValue: 1
     };
   }
 
@@ -68,7 +71,10 @@ class App extends Component {
       data.id = this.generateID();
       tasks.push(data);
     }else {
-      var index = this.findIndex(data.id);
+      // var index = this.findIndex(data.id);
+      let index = findIndex(tasks, (task) => {
+        return task.id === data.id;
+      });
       tasks[index] = data;
     }
     this.setState({
@@ -80,7 +86,9 @@ class App extends Component {
 
   onSetStatus = (id) => {
     var {tasks} = this.state;
-    let index = this.findIndex(id);
+    let index = findIndex(tasks, (task) => {
+      return task.id === id;
+    });
     if( index !== -1 ) {
       tasks[index].status =  !tasks[index].status;
       this.setState({
@@ -92,7 +100,9 @@ class App extends Component {
 
   onDelete = (id) => {
     var {tasks} = this.state;
-    let index = this.findIndex(id);
+    let index = findIndex(tasks, (task) => {
+      return task.id === id;
+    });
     if( index !== -1 ) {
       tasks.splice(index, 1);
       this.setState({
@@ -104,7 +114,9 @@ class App extends Component {
 
   onUpdate = (id) => {
     var {tasks} = this.state;
-    let index = this.findIndex(id);
+    let index = findIndex(tasks, (task) => {
+      return task.id === id;
+    });
     var taskEditing = tasks[index];
     // if( index !== -1 ) {
     this.setState({
@@ -141,9 +153,16 @@ class App extends Component {
     });
   };
 
+  sortItem = (sortBy, sortValue) => {
+    this.setState({
+      sortBy,
+      sortValue
+    });
+  };
+
   render() {
     let taskItems = this.state.tasks;
-    let {isDisplay, taskEditing, filter, search} = this.state;
+    let {isDisplay, taskEditing, filter, search, sortBy, sortValue} = this.state;
     if( filter ) {
       if( filter.name ) {
         taskItems = taskItems.filter( taskItem => {
@@ -157,13 +176,27 @@ class App extends Component {
           return taskItem.status === (filter.status === 1 ? true : false);
         }
       } );
-    }
+    };
     if( search ) {
       taskItems = taskItems.filter( taskItem => {
         return taskItem.name.toLowerCase().indexOf(search) !== -1;
       } );
-    }
+    };
     let showForm = isDisplay ? <TaskForm submit={this.submitForm} exit={this.onClose} edit={taskEditing} /> : '';
+    if( sortBy === 'name' ) {
+      taskItems.sort( (taskItem1, taskItem2) => {
+        if( taskItem1.name > taskItem2.name ) return sortValue;
+        else if( taskItem1.name < taskItem2.name ) return -sortValue;
+        else return 0;
+      } );
+    }else {
+      taskItems.sort( (taskItem1, taskItem2) => {
+        if( taskItem1.status > taskItem2.status ) return -sortValue;
+        else if( taskItem1.status < taskItem2.status ) return sortValue;
+        else return 0;
+      } );
+    };
+
     return (
       <div className="App">
         <div className="text-center">
@@ -181,7 +214,7 @@ class App extends Component {
             </div>            
             <div className="row mt-3">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <SearchSort search={this.searchItem} />
+                <SearchSort search={this.searchItem} sort={this.sortItem} sortBy={sortBy} sortValue={sortValue} />
               </div>
             </div>
             <div className="row mt-3">

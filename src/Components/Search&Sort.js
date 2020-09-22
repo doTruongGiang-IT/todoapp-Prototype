@@ -4,7 +4,7 @@ class SearchSort extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: ''
+      search: '',
     };
   }
 
@@ -17,6 +17,10 @@ class SearchSort extends Component {
 
   search = () => {
     this.props.search(this.state.search);
+  };
+
+  sort = (sortBy, sortValue) => {
+    this.props.sort(sortBy, sortValue);
   };
 
   render() {
@@ -37,10 +41,10 @@ class SearchSort extends Component {
                 Sort
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a className="dropdown-item" href="#">A-Z</a>
-                <a className="dropdown-item" href="#">Z-A</a>
-                <a className="dropdown-item" href="#">Active</a>
-                <a className="dropdown-item" href="#">Hide</a>
+                <a className="dropdown-item" href="#" onClick={() => this.sort('name', 1)}>A-Z</a>
+                <a className="dropdown-item" href="#" onClick={() => this.sort('name', -1)}>Z-A</a>
+                <a className="dropdown-item" href="#" onClick={() => this.sort('status', 1)}>Active</a>
+                <a className="dropdown-item" href="#" onClick={() => this.sort('status', -1)}>Hide</a>
               </div>
             </div>
           </div>
