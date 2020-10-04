@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as actions from '../Actions/index';
+import {connect} from 'react-redux';
 
 class SearchSort extends Component {
   constructor(props) {
@@ -16,11 +18,14 @@ class SearchSort extends Component {
   };
 
   search = () => {
-    this.props.search(this.state.search);
+    this.props.searchTask(this.state.search);
   };
 
   sort = (sortBy, sortValue) => {
-    this.props.sort(sortBy, sortValue);
+    this.props.sortTask({
+      by: sortBy,
+      value: sortValue
+    });
   };
 
   render() {
@@ -53,4 +58,19 @@ class SearchSort extends Component {
   }
 }
 
-export default SearchSort;
+const stateToProps = state => {
+  return {};
+};
+
+const dispatchToProps = (dispatch, props) => {
+  return {
+    searchTask: (keyword) => {
+      dispatch(actions.searchTask(keyword));
+    },
+    sortTask: (sort) => {
+      dispatch(actions.sortTask(sort));
+    }
+  };
+};
+
+export default connect(stateToProps, dispatchToProps)(SearchSort);

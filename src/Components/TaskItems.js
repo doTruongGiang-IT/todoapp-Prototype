@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import * as actions from '../Actions/index';
 
 class TaskItems extends Component {
     setStatus = () => {
-        this.props.setStatus(this.props.task.id);
+        this.props.toggleStatus(this.props.task.id);
     };
 
     deleteItem = () => {
-        this.props.delete(this.props.task.id);
+        this.props.deleteTask(this.props.task.id);
+        this.props.closeForm();
     };
 
     updateItem = () => {
-        this.props.update(this.props.task.id);
+        this.props.openForm();
+        this.props.updateTask(this.props.task);
     };
 
     render() {
@@ -27,7 +31,7 @@ class TaskItems extends Component {
                         Update
                     </button>
                     <button type="button" className="btn btn-primary" onClick={this.deleteItem}>
-                        Delete
+                        Finish
                     </button>
                 </td>
             </tr>
@@ -35,4 +39,28 @@ class TaskItems extends Component {
     }
 }
 
-export default TaskItems;
+const stateToProps = state => {
+    return {};
+};
+
+const dispatchToProps = (dispatch, props) => {
+    return {
+        toggleStatus: (id) => {
+            dispatch(actions.toggleStatus(id));
+        },
+        deleteTask: (id) => {
+            dispatch(actions.deleteTask(id));
+        },
+        closeForm: () => {
+          dispatch(actions.closeForm());
+        },
+        openForm: () => {
+            dispatch(actions.openForm());
+        },
+        updateTask: (task) => {
+            dispatch(actions.updateTask(task));
+        }
+    };
+};
+
+export default connect(stateToProps, dispatchToProps)(TaskItems);

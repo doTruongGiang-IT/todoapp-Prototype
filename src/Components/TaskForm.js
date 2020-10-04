@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import * as actions from '../Actions/index';
 
 class TaskForm extends Component {
     constructor(props) {
@@ -11,23 +13,25 @@ class TaskForm extends Component {
     };
 
     componentWillMount() {
-        if( this.props.edit ) {
+        if( this.props.taskEditing ) {
             this.setState({
-                id: this.props.edit.id,
-                name: this.props.edit.name,
-                status: this.props.edit.status
+                id: this.props.taskEditing.id,
+                name: this.props.taskEditing.name,
+                status: this.props.taskEditing.status
             });
+        }else {
+            this.clearForm();
         }
     };
 
     componentWillReceiveProps(nextProps) {
-        if( nextProps && nextProps.edit ) {
+        if( nextProps && nextProps.taskEditing ) {
             this.setState({
-                id: nextProps.edit.id,
-                name: nextProps.edit.name,
-                status: nextProps.edit.status
+                id: nextProps.taskEditing.id,
+                name: nextProps.taskEditing.name,
+                status: nextProps.taskEditing.status
             });
-        }else if( !nextProps.edit ) {
+        }else if( !nextProps.taskEditing ) {
             this.setState({
                 id: '',
                 name: '',
@@ -48,12 +52,12 @@ class TaskForm extends Component {
     };
 
     onExit = () => {
-        this.props.exit();
+        this.props.closeForm();
     };
 
     submitForm = (e) => {
         e.preventDefault();
-        this.props.submit(this.state);
+        this.props.saveTask(this.state);
         this.clearForm();
         this.onExit();
     };
@@ -66,9 +70,10 @@ class TaskForm extends Component {
     };
 
   render() {
+    if( !this.props.isDisplay ) return '';  
     return (
         <div className="card">
-            <h3 className="card-header" onClick={this.onExit}>{this.props.edit !== null ? 'Edit Task' : 'Insert Task'}</h3>
+            <h3 className="card-header" onClick={this.onExit}>{!this.state.id ? 'Insert Task' : 'Edit Task'}</h3>
             <div className="card-body">
                 <form onSubmit={this.submitForm}>
                     <div className="form-group">
@@ -99,4 +104,22 @@ class TaskForm extends Component {
   }
 }
 
-export default TaskForm;
+const stateToProps = state => {
+    return {
+        isDisplay: state.isDisplay,
+        taskEditing: state.taskEditing
+    };
+};
+
+const dispatchToProps = (dispatch, props) => {
+    return {
+        saveTask: (task) => {
+            dispatch(actions.saveTask(task));
+        },
+        closeForm: () => {
+          dispatch(actions.closeForm());
+        }
+    };
+};
+
+export default connect(stateToProps, dispatchToProps)(TaskForm);
