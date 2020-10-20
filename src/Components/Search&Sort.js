@@ -1,5 +1,7 @@
-// [Author] - Đỗ Trường Giang 
-// [Desc] - Đây là Component SearchSort đùng để tìm kiếm và sắp xếp
+/*
+[Author] - Đỗ Trường Giang 
+[Desc] - Đây là Component SearchSort đùng để tìm kiếm và sắp xếp
+*/
 import React, { Component } from 'react';
 import * as actions from '../Actions/index';
 import {connect} from 'react-redux';
@@ -11,12 +13,13 @@ class SearchSort extends Component {
       search: '',
     };
   };
-
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - onSetKeywords 
-// [Desc] - Đây là hàm dùng để đặt giá trị tìm kiếm cho khung search
-// :param1: e - object
-// :return: Trả về giá trị cần được tìm kiếm   
+/*
+  [Author] - Đỗ Trường Giang 
+  [FunctionName] - onSetKeywords 
+  [Desc] - Đây là hàm dùng để đặt giá trị tìm kiếm cho khung search
+  :param1: e - object
+  :return: Trả về giá trị cần được tìm kiếm   
+*/
   onSetKeywords = (e) => {
     let value = e.target.value;
     this.setState({
@@ -24,20 +27,24 @@ class SearchSort extends Component {
     });
   };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - onSearch 
-// [Desc] - Đây là hàm dùng để gửi giá trị cần được tìm kiếm lên reducer để xử lý
-// :return: Trả về task sau khi tìm kiếm
+/*
+  [Author] - Đỗ Trường Giang 
+  [FunctionName] - onSearch 
+  [Desc] - Đây là hàm dùng để gửi giá trị cần được tìm kiếm lên reducer để xử lý
+  :return: Trả về task sau khi tìm kiếm
+*/
   onSearch = () => {
     this.props.searchTask(this.state.search);
   };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - onSort 
-// [Desc] - Đây là hàm dùng để gửi giá trị cần được sort lên reducer để xử lý
-// :param1: sortBy - string
-// :param2: SortValue - number
-// :return: Trả về list cac task sau khi sắp xếp
+/*  
+  [Author] - Đỗ Trường Giang 
+  [FunctionName] - onSort 
+  [Desc] - Đây là hàm dùng để gửi giá trị cần được sort lên reducer để xử lý
+  :param1: sortBy - string
+  :param2: SortValue - number
+  :return: Trả về list cac task sau khi sắp xếp
+*/
   onSort = (sortBy, sortValue) => {
     this.props.sortTask({
       by: sortBy,
@@ -75,21 +82,25 @@ class SearchSort extends Component {
   }
 }
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - stateToProps
-// [Desc] - Đây là hàm dùng để chuyển state được lưu trữ trong store thành props
-// :param1: state - array
-// :return: Không có giá trị trả về  
+/*
+  [Author] - Đỗ Trường Giang 
+  [FunctionName] - stateToProps
+  [Desc] - Đây là hàm dùng để chuyển state được lưu trữ trong store thành props
+  :param1: state - array
+  :return: Không có giá trị trả về  
+*/
 const stateToProps = state => {
   return {};
 };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - dispatchToProps 
-// [Desc] - Đây là hàm dùng để chuyển các hành động của người dùng thành props
-// :param1: dispatch - function
-// :param2: props
-// :return: Trả về  cac props: searchTask, sortTask
+/*
+  [Author] - Đỗ Trường Giang 
+  [FunctionName] - dispatchToProps 
+  [Desc] - Đây là hàm dùng để chuyển các hành động của người dùng thành props
+  :param1: dispatch - function
+  :param2: props
+  :return: Trả về  cac props: searchTask, sortTask
+*/
 const dispatchToProps = (dispatch, props) => {
   return {
     searchTask: (keyword) => {

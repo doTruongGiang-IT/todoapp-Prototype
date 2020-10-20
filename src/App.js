@@ -1,5 +1,7 @@
-// [Author] - Đỗ Trường Giang 
-// [Desc] - Đây là Component App hiển thi giao diện chính cho app
+/*
+[Author] - Đỗ Trường Giang 
+[Desc] - Đây là Component App hiển thi giao diện chính cho app
+*/
 import React, { Component } from 'react';
 import TaskForm from './Components/TaskForm';
 import SearchSort from './Components/Search&Sort';
@@ -9,10 +11,12 @@ import './App.css';
 import * as actions from './Actions/index';
 
 class App extends Component {
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - onToggleForm
-// [Desc] - Đây là hàm dùng để đóng và mở form
-// :return: Không có giá trị trả vể  
+/*
+  [Author] - Đỗ Trường Giang 
+  [FunctionName] - onToggleForm
+  [Desc] - Đây là hàm dùng để đóng và mở form
+  :return: Không có giá trị trả vể  
+*/
   onToggleForm = () => {
     let {taskEditing} = this.props;
     if( taskEditing && taskEditing.id !== '' ) {
@@ -68,11 +72,13 @@ class App extends Component {
   }
 }
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - stateToProps
-// [Desc] - Đây là hàm dùng để chuyển state được lưu trữ trong store thành props
-// :param1: state - array
-// :return: Trả về các props: isDisplay, taskEditing
+/*
+  [Author] - Đỗ Trường Giang 
+  [FunctionName] - stateToProps
+  [Desc] - Đây là hàm dùng để chuyển state được lưu trữ trong store thành props
+  :param1: state - array
+  :return: Trả về các props: isDisplay, taskEditing
+*/
 const stateToProps = state => {
   return {
     isDisplay: state.isDisplay,
@@ -80,12 +86,14 @@ const stateToProps = state => {
   };
 };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - dispatchToProps 
-// [Desc] - Đây là hàm dùng để chuyển các hành động của người dùng thành props
-// :param1: dispatch - function
-// :param2: props
-// :return: Trả về các props: toggleForm, clearTask, openForm
+/*
+  [Author] - Đỗ Trường Giang 
+  [FunctionName] - dispatchToProps 
+  [Desc] - Đây là hàm dùng để chuyển các hành động của người dùng thành props
+  :param1: dispatch - function
+  :param2: props
+  :return: Trả về các props: toggleForm, clearTask, openForm
+*/
 const dispatchToProps = (dispatch, props) => {
   return {
     toggleForm: () => {

@@ -1,5 +1,7 @@
-// [Author] - Đỗ Trường Giang 
-// [Desc] - Đây là Component TaskForm đùng để thao tác các hành động thêm task và cập nhật task
+/*
+[Author] - Đỗ Trường Giang 
+[Desc] - Đây là Component TaskForm đùng để thao tác các hành động thêm task và cập nhật task
+*/
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../Actions/index';
@@ -42,11 +44,13 @@ class TaskForm extends Component {
         }
     };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - onSetKTask 
-// [Desc] - Đây là hàm dùng để đặt giá trị cần cập nhật
-// :param1: e - object
-// :return: Trả về giá trị cần được cập nhật     
+/*
+    [Author] - Đỗ Trường Giang 
+    [FunctionName] - onSetKTask 
+    [Desc] - Đây là hàm dùng để đặt giá trị cần cập nhật
+    :param1: e - object
+    :return: Trả về giá trị cần được cập nhật   
+*/  
     onSetTask = (e) => {
         let name = e.target.name;
         let value = e.target.value;
@@ -58,19 +62,23 @@ class TaskForm extends Component {
         } );
     };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - onExit
-// [Desc] - Đây là hàm dùng để đóng form
-// :return: Không có giá trị trả về     
+/*
+    [Author] - Đỗ Trường Giang 
+    [FunctionName] - onExit
+    [Desc] - Đây là hàm dùng để đóng form
+    :return: Không có giá trị trả về     
+*/
     onExit = () => {
         this.props.closeForm();
     };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - onSubmitForm
-// [Desc] - Đây là hàm dùng để thêm task mới
-// :param1: e - object
-// :return: Trả về list các task mới sau khi đã thêm task mới
+/*
+    [Author] - Đỗ Trường Giang 
+    [FunctionName] - onSubmitForm
+    [Desc] - Đây là hàm dùng để thêm task mới
+    :param1: e - object
+    :return: Trả về list các task mới sau khi đã thêm task mới
+*/
     onSubmitForm = (e) => {
         e.preventDefault();
         this.props.saveTask(this.state);
@@ -78,10 +86,12 @@ class TaskForm extends Component {
         this.onExit();
     };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - onClearForm
-// [Desc] - Đây là hàm dùng để clear form
-// :return: Không có giá trị trả về 
+/*
+    [Author] - Đỗ Trường Giang 
+    [FunctionName] - onClearForm
+    [Desc] - Đây là hàm dùng để clear form
+    :return: Không có giá trị trả về 
+*/
     onClearForm = () => {
         this.setState({
             name: '',
@@ -124,11 +134,13 @@ class TaskForm extends Component {
   }
 }
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - stateToProps
-// [Desc] - Đây là hàm dùng để chuyển state được lưu trữ trong store thành props
-// :param1: state - array
-// :return: Trả về các props: isDisplay, taskEditing
+/*
+    [Author] - Đỗ Trường Giang 
+    [FunctionName] - stateToProps
+    [Desc] - Đây là hàm dùng để chuyển state được lưu trữ trong store thành props
+    :param1: state - array
+    :return: Trả về các props: isDisplay, taskEditing
+*/
 const stateToProps = state => {
     return {
         isDisplay: state.isDisplay,
@@ -136,12 +148,14 @@ const stateToProps = state => {
     };
 };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - dispatchToProps 
-// [Desc] - Đây là hàm dùng để chuyển các hành động của người dùng thành props
-// :param1: dispatch - function
-// :param2: props
-// :return: Trả về các props: saveTask, closeForm
+/*
+    [Author] - Đỗ Trường Giang 
+    [FunctionName] - dispatchToProps 
+    [Desc] - Đây là hàm dùng để chuyển các hành động của người dùng thành props
+    :param1: dispatch - function
+    :param2: props
+    :return: Trả về các props: saveTask, closeForm
+*/
 const dispatchToProps = (dispatch, props) => {
     return {
         saveTask: (task) => {

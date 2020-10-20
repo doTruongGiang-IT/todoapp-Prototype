@@ -1,5 +1,7 @@
-// [Author] - Đỗ Trường Giang 
-// [Desc] - Đây là Component isDisplay dùng để xử lý các hành động liên quan đến đóng và mở form
+/*
+[Author] - Đỗ Trường Giang 
+[Desc] - Đây là Component isDisplay dùng để xử lý các hành động liên quan đến đóng và mở form
+*/
 import * as types from '../Constsants/actionTypes';
 
 let initialState = false;

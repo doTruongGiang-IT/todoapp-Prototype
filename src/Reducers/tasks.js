@@ -1,20 +1,26 @@
-// [Author] - Đỗ Trường Giang 
-// [Desc] - Đây là Component tasks dùng để xử lý các hành động liên quan đến task
+/*
+[Author] - Đỗ Trường Giang 
+[Desc] - Đây là Component tasks dùng để xử lý các hành động liên quan đến task
+*/
 import * as types from '../Constsants/actionTypes';
 import {findIndex} from 'lodash';
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - Viết dưới dạng arrow function
-// [Desc] - Đây là hàm dùng để tạo chuỗi mã hóa
-// :return: Trả về chuỗi mã hóa
+/*
+    [Author] - Đỗ Trường Giang 
+    [FunctionName] - Viết dưới dạng arrow function
+    [Desc] - Đây là hàm dùng để tạo chuỗi mã hóa
+    :return: Trả về chuỗi mã hóa
+*/
 let encode = () => {
     return Math.floor( (1+Math.random()) * 0x10000 ).toString(16).substring(1);
 };
 
-// [Author] - Đỗ Trường Giang 
-// [FunctionName] - Viết dưới dạng arrow function
-// [Desc] - Đây là hàm dùng để đặt id cho task
-// :return: Trả về id cho task 
+/*
+    [Author] - Đỗ Trường Giang 
+    [FunctionName] - Viết dưới dạng arrow function
+    [Desc] - Đây là hàm dùng để đặt id cho task
+    :return: Trả về id cho task 
+*/
 let generateID = () => {
     return encode() + encode() + encode() + " - " + encode() + encode();
 };

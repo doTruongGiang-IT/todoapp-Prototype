@@ -1,5 +1,7 @@
-// [Author] - Đỗ Trường Giang 
-// [Desc] - Đây là Component index dùng để tổng hợp tất cả các reducer lại thành 1 và đưa lên store quản lý
+/*
+[Author] - Đỗ Trường Giang 
+[Desc] - Đây là Component index dùng để tổng hợp tất cả các reducer lại thành 1 và đưa lên store quản lý
+*/
 import { combineReducers } from 'redux';
 import tasks from './tasks';
 import isDisplay from './isDisplay';
