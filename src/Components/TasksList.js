@@ -1,9 +1,16 @@
+// [Author] - Đỗ Trường Giang 
+// [Desc] - Đây là Component TaskList đùng để chứa các task của ngươi dùng dưới dạng table
 import React, { Component } from 'react';
 import TaskItems from './TaskItems';
 import {connect} from 'react-redux';
 import * as actions from '../Actions/index';
 
 class TasksList extends Component {
+// [Author] - Đỗ Trường Giang 
+// [FunctionName] - onChange 
+// [Desc] - Đây là hàm dùng để đặt giá trị cần lọc
+// :param1: e - object
+// :return: Trả về giá trị cần được lọc
     onChange = (e) => {
         let name = e.target.name;
         let value = e.target.value;
@@ -17,6 +24,11 @@ class TasksList extends Component {
     render() {
         let {tasks, filter, search, sort} = this.props;
 
+// [Author] - Đỗ Trường Giang 
+// [FunctionName] - Không có nhưng dưới dạng arrow function 
+// [Desc] - Đây là hàm dùng để lọc trực tiếp ngay trên bảng
+// :param1: taskItem - object
+// :return: Trả về bảng task mới        
         if( filter ) {
           if( filter.name ) {
             tasks = tasks.filter( taskItem => {
@@ -32,12 +44,22 @@ class TasksList extends Component {
           } );
         };
 
+// [Author] - Đỗ Trường Giang 
+// [FunctionName] - Không có nhưng dưới dạng arrow function
+// [Desc] - Đây là hàm dùng để tìm kiếm task sau khi lọc thu hẹp phạm vi cần tìm kiếm
+// :param1: taskItem - object
+// :return: Trả về giá trị lọc được       
         if( search ) {
           tasks = tasks.filter( taskItem => {
             return taskItem.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
           } );
         };
 
+// [Author] - Đỗ Trường Giang 
+// [FunctionName] - Không có nhưng dưới dạng arrow function
+// [Desc] - Đây là hàm dùng để sắp xếp task sau khi lọc
+// :param1: taskItem - object
+// :return: Trả về bảng task mới sau khi sắp xếp        
         if( sort ) {
           if( sort.by === 'name' ) {
             tasks.sort( (taskItem1, taskItem2) => {
@@ -88,6 +110,11 @@ class TasksList extends Component {
     }
 }
 
+// [Author] - Đỗ Trường Giang 
+// [FunctionName] - stateToProps
+// [Desc] - Đây là hàm dùng để chuyển state được lưu trữ trong store thành props
+// :param1: state - array
+// :return: Trả về các props: task, filter, search, sort
 const statesToProps = (state) => {
     return {
         tasks: state.tasks,
@@ -97,6 +124,12 @@ const statesToProps = (state) => {
     };
 };
 
+// [Author] - Đỗ Trường Giang 
+// [FunctionName] - dispatchToProps 
+// [Desc] - Đây là hàm dùng để chuyển các hành động của người dùng thành props
+// :param1: dispatch - function
+// :param2: props
+// :return: Trả về các props: filterTask
 const dispatchToProps = (dispatch, props) => {
     return {
       filterTask: (filter) => {

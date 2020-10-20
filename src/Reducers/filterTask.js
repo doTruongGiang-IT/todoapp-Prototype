@@ -1,3 +1,5 @@
+// [Author] - Đỗ Trường Giang 
+// [Desc] - Đây là Component filterTask dùng để  xử lý các hành đông liên quan đến lọc task
 import * as types from '../Constsants/actionTypes';
 
 let initialState = {

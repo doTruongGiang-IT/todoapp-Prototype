@@ -1,3 +1,5 @@
+// [Author] - Đỗ Trường Giang 
+// [Desc] - Đây là Component taskEditing dùng để xử lý các hành động liên quan đến cập nhât task
 import * as types from '../Constsants/actionTypes';
 
 let initialState = {
